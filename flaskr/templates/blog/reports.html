@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Get Reports{% endblock %}</h1>
+    {% if g.user %}
+        <a class="action" href="{{ url_for('blog.index') }}">History</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form method=post enctype=multipart/form-data>
+        <input type=file name=file required>
+
+        <select class="newInput" required>
+            <option value="">--Select Card Type--</option>
+            <option value="CP">CP (Card Present)</option>
+            <option value="CNP">CNP (Card Not Present)</option>
+        </select>
+
+        <input class="newInput" type="date" name="fileDate" required>
+
+        <input type=submit value=Upload>
+    </form>
+    {% if posts[-1] != "" %}
+        <img src="static/img/excel.png" alt="Excel File Icon" height="68px" width="68px">
+        <br>
+        <input type=submit value=Download>
+    {% endif %}
+{% endblock %}
