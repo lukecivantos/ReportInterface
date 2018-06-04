@@ -1,5 +1,5 @@
 from flask import (
-    Flask, Blueprint, flash, g, redirect, render_template, request, url_for
+    send_file, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
 from werkzeug.exceptions import abort
 
@@ -12,7 +12,7 @@ from flaskr.auth import login_required
 from flaskr.db import get_db
 
 bp = Blueprint('blog', __name__)
- 
+
 @bp.route('/')
 @login_required
 def index():
@@ -23,6 +23,9 @@ def index():
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('blog/index.html', posts=posts)
+
+
+
 
 """
 Following code handles file uploads
@@ -41,6 +44,8 @@ def allowed_file(filename):
 @login_required
 def reports():
     filename = ""
+    name = ""
+    names = ""
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -57,8 +62,9 @@ def reports():
             #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             card = request.form['card']
             fileDate = request.form['fileDate']
-            createFile(card, fileDate, file)
-
+            name = createFile(card, fileDate, file)
+            names = name.split("/")
+            names = name[2]
     db = get_db()
     posts = db.execute(
         'SELECT p.id, title, body, created, author_id, username'
@@ -66,13 +72,18 @@ def reports():
         ' ORDER BY created DESC'
     ).fetchall()
     posts.append(filename)
+    if names != "":
+        db.execute(
+            'INSERT INTO post (title, body, author_id)'
+            ' VALUES (?, ?, ?)',
+            (names, filename, g.user['id'])
+        )
+        db.commit()
     return render_template('blog/reports.html', posts=posts)
 
-
-
-
-
-
+"""@bp.route('/return-file')
+def return_file():
+    return send_file()"""
 
 
 
