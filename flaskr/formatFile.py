@@ -7,6 +7,7 @@ def createFile(card, fileDate, file):
     name = "flaskr/uploads/" + card + "-" + day + "-" + month + "-" + year + ".xls"
     shutil.copy2('flaskr/uploads/template.txt', name)
 
+
     a = open(name, 'a')
     text = file.read()
     text = text.decode('ascii')
