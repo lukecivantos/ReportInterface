@@ -1,13 +1,13 @@
 html {
   font-family: sans-serif;
-  background: #eee;
+  background: #EEE;
   padding: 1rem;
 }
 
 body {
   max-width: 960px;
   margin: 0 auto;
-  background: white;
+  background: #EEE;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -30,6 +30,7 @@ nav {
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
+  border-radius: 5px 5px 0px 0px
 }
 
 nav h1 {
@@ -54,8 +55,10 @@ nav ul li a, nav ul li span, header .action {
   padding: 0.5rem;
 }
 
+
 .content {
   padding: 0 1rem 1rem;
+  background-color: white;
 }
 
 .content > header {
@@ -108,6 +111,7 @@ nav ul li a, nav ul li span, header .action {
   margin: 1em 0;
   display: flex;
   flex-direction: column;
+
 }
 
 .content label {
@@ -141,4 +145,14 @@ input[type=submit] {
 #logo {
     text-align: center;
     background-color: #EEEEEE;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
 }
