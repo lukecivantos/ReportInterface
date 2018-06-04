@@ -6,7 +6,7 @@ from werkzeug.exceptions import abort
 #importing for secure file upload and conversion
 from flaskr.formatFile import createFile
 from werkzeug.utils import secure_filename
-import os
+import os, glob
 
 from flaskr.auth import login_required
 from flaskr.db import get_db
@@ -22,6 +22,11 @@ def index():
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
+
+    pastFiles = [f for f in glob.glob("flaskr/static/uploads/*.xls") if f.endswith(".xls")]
+    for f in pastFiles:
+        os.remove(f)
+
     return render_template('blog/index.html', posts=posts)
 
 
@@ -32,7 +37,7 @@ Following code handles file uploads
 First lines check for filename security
 below then reports set up downloads and handle uploaded files
 """
-UPLOAD_FOLDER = 'flaskr/uploads'
+UPLOAD_FOLDER = 'flaskr/static/uploads'
 ALLOWED_EXTENSIONS = set(['txt'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -45,7 +50,6 @@ def allowed_file(filename):
 def reports():
     filename = ""
     name = ""
-    names = ""
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -63,27 +67,25 @@ def reports():
             card = request.form['card']
             fileDate = request.form['fileDate']
             name = createFile(card, fileDate, file)
-            names = name.split("/")
-            names = name[2]
+            name = name.split("/")
+            name = name[3]
     db = get_db()
     posts = db.execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
+    posts.append(name)
     posts.append(filename)
-    if names != "":
+    if name != "":
         db.execute(
             'INSERT INTO post (title, body, author_id)'
             ' VALUES (?, ?, ?)',
-            (names, filename, g.user['id'])
+            (name, filename, g.user['id'])
         )
         db.commit()
     return render_template('blog/reports.html', posts=posts)
 
-"""@bp.route('/return-file')
-def return_file():
-    return send_file()"""
 
 
 
