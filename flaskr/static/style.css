@@ -1,13 +1,13 @@
 html {
   font-family: sans-serif;
-  background: #EEE;
+  background: #A3D6F5;
   padding: 1rem;
 }
 
 body {
   max-width: 960px;
   margin: 0 auto;
-  background: #EEE;
+  background: #A3D6F5;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -26,7 +26,7 @@ hr {
 }
 
 nav {
-  background: lightgray;
+  background: #66A7C5;
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
@@ -58,7 +58,8 @@ nav ul li a, nav ul li span, header .action {
 
 .content {
   padding: 0 1rem 1rem;
-  background-color: white;
+  background-color: #CEEBFB;
+  border-radius: 0px 0px 5px 5px;
 }
 
 .content > header {
@@ -144,7 +145,8 @@ input[type=submit] {
 
 #logo {
     text-align: center;
-    background-color: #EEEEEE;
+    background-color: #A3D6F5;
+    margin-bottom: 20px;
 }
 
 .footer {
@@ -153,6 +155,6 @@ input[type=submit] {
   bottom: 0;
   left: 0;
   padding: 1rem;
-  background-color: #efefef;
+  background-color: #A3D6F5;
   text-align: center;
 }
