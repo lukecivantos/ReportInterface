@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Get Reports{% endblock %}</h1>
+    {% if g.user %}
+        <a class="action" href="{{ url_for('blog.index') }}">History</a>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <form class="newInput" method="post" enctype=multipart/form-data>
+        <input type="file" name="file" required>
+
+        <select class="newInput" name="card" required>
+            <option value="">--Select Card Type--</option>
+            <option value="CP">CP (Card Present)</option>
+            <option value="CNP">CNP (Card Not Present)</option>
+        </select>
+
+        <input class="newInput" type="date" name="fileDate" min= "2010-01-01" required>
+
+        <input type="submit" value="Upload">
+    </form>
+    {% if posts[-1] != "" %}
+        <h4>Upload Successful!</h4>
+        <a class="action" href="{{ url_for('blog.index') }}"><a href="/static/uploads/{{posts[-2]}}" download="{{posts[-2]}}">Download</a></a>
+    {% endif %}
+{% endblock %}
+  
