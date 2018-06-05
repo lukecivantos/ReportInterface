@@ -4,8 +4,8 @@ import io
 def createFile(card, fileDate, file):
     fileDate = fileDate.split("-")
     year,month,day = fileDate
-    name = "flaskr/static/uploads/" + card + "-" + day + "-" + month + "-" + year + ".xls"
-    shutil.copy2('flaskr/static/uploads/template.txt', name)
+    name = "app/static/uploads/" + card + "-" + day + "-" + month + "-" + year + ".xls"
+    shutil.copy2('app/static/uploads/template.txt', name)
 
 
     a = open(name, 'a')

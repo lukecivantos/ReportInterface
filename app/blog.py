@@ -4,12 +4,12 @@ from flask import (
 from werkzeug.exceptions import abort
 
 #importing for secure file upload and conversion
-from flaskr.formatFile import createFile
+from app.formatFile import createFile
 from werkzeug.utils import secure_filename
 import os, glob
 
-from flaskr.auth import login_required
-from flaskr.db import get_db
+from app.auth import login_required
+from app.db import get_db
 
 bp = Blueprint('blog', __name__)
 
@@ -23,7 +23,7 @@ def index():
         ' ORDER BY created DESC'
     ).fetchall()
 
-    pastFiles = [f for f in glob.glob("flaskr/static/uploads/*.xls") if f.endswith(".xls")]
+    pastFiles = [f for f in glob.glob("app/static/uploads/*.xls") if f.endswith(".xls")]
     for f in pastFiles:
         os.remove(f)
 
@@ -37,7 +37,7 @@ Following code handles file uploads
 First lines check for filename security
 below then reports set up downloads and handle uploaded files
 """
-UPLOAD_FOLDER = 'flaskr/static/uploads'
+UPLOAD_FOLDER = 'app/static/uploads'
 ALLOWED_EXTENSIONS = set(['txt'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
