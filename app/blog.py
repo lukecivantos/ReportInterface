@@ -16,6 +16,7 @@ bp = Blueprint('blog', __name__)
 @bp.route('/')
 @login_required
 def index():
+    print("here")
     db = get_db()
     posts = db.execute(
         'SELECT p.id, title, body, created, author_id, username'

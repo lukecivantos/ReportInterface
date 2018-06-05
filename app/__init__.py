@@ -9,7 +9,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
-        SECRET_KEY = 'dev',
+        SECRET_KEY = b'\xf5\xbf\xf7-\x99\x0bX\x93\xf7\x911\x01\xa7\xfd\xfa\xd8',
         DATABASE = os.path.join(app.instance_path, 'app.sqlite'),
     )
 
@@ -42,3 +42,6 @@ def create_app(test_config=None):
     app.add_url_rule('/', endpoint='index')
 
     return app
+
+
+app = create_app
