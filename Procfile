@@ -1,1 +1,1 @@
-web: gunicorn RevenueReports:app --log-file=-
+web: gunicorn app/blog:app --log-file=-
