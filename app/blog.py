@@ -18,6 +18,7 @@ bp = Blueprint('blog', __name__)
 def index():
     print("here")
     db = get_db()
+
     posts = db.execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
@@ -27,7 +28,6 @@ def index():
     pastFiles = [f for f in glob.glob("app/static/uploads/*.xls") if f.endswith(".xls")]
     for f in pastFiles:
         os.remove(f)
-
     return render_template('blog/index.html', posts=posts)
 
 
