@@ -14,13 +14,12 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/register', methods=('GET','POST'))
 def register():
     if request.method == 'POST':
-
-        verification = request.form['verification']
-        print(verification)
-        if verification != "":
+        if 'verification' in request.form:
+            verification = request.form['verification']
             if verification != "HPTTicketSales170":
                 flash("Incorrect Verification Code. Check Tickets Email for Verifications Code.")
             else:
+                print("here")
                 return render_template('auth/register.html', verified=True)
 
         else:
@@ -28,7 +27,7 @@ def register():
             username = request.form['username']
             db = get_db()
             error = None
-
+            print("here2")
             if not username:
                 error = "Username is required."
             elif not password:
