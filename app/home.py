@@ -44,6 +44,41 @@ def deleted(id):
 
     return redirect(url_for('home.admin'))
 
+
+"""
+Makes a user an admin
+"""
+
+@bp.route('/<int:id>/makeadmin')
+@login_required
+def makeadmin(id):
+    db = get_db()
+    db.execute(
+        'UPDATE user SET admin = ?'
+        ' WHERE id = ?',
+        (1, id)
+    )
+    db.commit()
+    return redirect(url_for('home.admin'))
+
+
+"""
+Removes a user as admin
+"""
+
+@bp.route('/<int:id>/removeadmin')
+@login_required
+def removeadmin(id):
+    db = get_db()
+    db.execute(
+        'UPDATE user SET admin = ?'
+        ' WHERE id = ?',
+        (0, id)
+    )
+    db.commit()
+    return redirect(url_for('home.admin'))
+
+
 """
 Following code basically gives the ability to delete users to the Admin
 """
@@ -58,6 +93,8 @@ def admin():
     ).fetchall()
 
     return render_template('home/admin.html', users=users)
+
+
 
 
 
