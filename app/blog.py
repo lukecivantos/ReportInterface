@@ -30,6 +30,19 @@ def index():
     return render_template('blog/index.html', posts=posts)
 
 
+"""
+Following code basically gives the ability to delete users to the Admin
+"""
+@bp.route('/admin')
+@login_required
+def admin():
+    db = get_db()
+    users = db.execute(
+        'SELECT * FROM user'
+    ).fetchall()
+    return render_template('blog/admin.html', users=users)
+
+
 
 
 """
