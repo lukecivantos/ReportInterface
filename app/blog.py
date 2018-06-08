@@ -1,5 +1,5 @@
 from flask import (
-    send_file, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
+    session, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
 from werkzeug.exceptions import abort
 
@@ -29,6 +29,10 @@ def index():
         os.remove(f)
     return render_template('blog/index.html', posts=posts)
 
+@bp.route('/deleted')
+@login_required
+def deleted():
+    return redirect(url_for('blog.admin'))
 
 """
 Following code basically gives the ability to delete users to the Admin
@@ -37,9 +41,12 @@ Following code basically gives the ability to delete users to the Admin
 @login_required
 def admin():
     db = get_db()
+    if g.user['admin'] == 0:
+        return redirect(url_for('blog.index'))
     users = db.execute(
         'SELECT * FROM user'
     ).fetchall()
+
     return render_template('blog/admin.html', users=users)
 
 

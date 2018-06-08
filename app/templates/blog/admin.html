@@ -20,11 +20,11 @@
           {% endif %}
         </div>
         {% if (g.user['id'] == user['id']) or (g.user['admin'] == 1) %}
-          <a class="action" href="{{ url_for('blog.update', id=user['id']) }}">Edit</a>
+          <a class="action" href="{{ url_for('blog.update', id=user['id']) }}">Make Admin</a>
         {% endif %}
       </header>
       <br>
-      <a class="action" href="{{ url_for('blog.reports') }}">Delete User</a>
+      <a class="action" href="{{ url_for('blog.deleted') }}">Delete User</a>
     </article>
     {% if not loop.last %}
       <hr>
