@@ -13,6 +13,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET','POST'))
 def register():
+    error = None
     if request.method == 'POST':
         if request.form["submit"] == "Send Code":
             return render_template('auth/register.html', verified=False,sent=True)
@@ -26,7 +27,6 @@ def register():
             password = request.form['password']
             username = request.form['username']
             db = get_db()
-            error = None
             if not username:
                 error = "Username is required."
             elif not re.match(r"[^@]+@[^@]+\.[^@]+", username):
@@ -46,10 +46,12 @@ def register():
                 db.commit()
                 return redirect(url_for('auth.login'))
             flash(error)
-    if error == "Username must be a valid email address.":
-        return render_template('auth/register.html', verified=True,sent=False)
-    else:
-        return render_template('auth/register.html', verified=False,sent=False)
+    if error != None:
+        if error == "Username must be a valid email address.":
+            return render_template('auth/register.html', verified=True,sent=False)
+        elif error[:8] != "Password" and error[:8] != "Username":
+            return render_template('auth/register.html', verified=True,sent=False)
+    return render_template('auth/register.html', verified=False,sent=False)
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
