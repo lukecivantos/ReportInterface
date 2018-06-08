@@ -11,7 +11,7 @@ import os, glob
 from app.auth import login_required
 from app.db import get_db
 
-bp = Blueprint('blog', __name__)
+bp = Blueprint('home', __name__)
 
 @bp.route('/')
 @login_required
@@ -27,7 +27,7 @@ def index():
     pastFiles = [f for f in glob.glob("app/static/uploads/*.xls") if f.endswith(".xls")]
     for f in pastFiles:
         os.remove(f)
-    return render_template('blog/index.html', posts=posts)
+    return render_template('home/index.html', posts=posts)
 
 """
 The following code deletes a user from the database
@@ -41,8 +41,8 @@ def deleted(id):
 
     db.execute('DELETE FROM user WHERE id = ?', (id,))
     db.commit()
-    
-    return redirect(url_for('blog.admin'))
+
+    return redirect(url_for('home.admin'))
 
 """
 Following code basically gives the ability to delete users to the Admin
@@ -52,12 +52,12 @@ Following code basically gives the ability to delete users to the Admin
 def admin():
     db = get_db()
     if g.user['admin'] == 0:
-        return redirect(url_for('blog.index'))
+        return redirect(url_for('home.index'))
     users = db.execute(
         'SELECT * FROM user'
     ).fetchall()
 
-    return render_template('blog/admin.html', users=users)
+    return render_template('home/admin.html', users=users)
 
 
 
@@ -114,7 +114,7 @@ def reports():
             (name, filename, g.user['id'])
         )
         db.commit()
-    return render_template('blog/reports.html', posts=posts)
+    return render_template('home/reports.html', posts=posts)
 
 
 
@@ -140,9 +140,9 @@ def create():
                 (title, body, g.user['id'])
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('home.index'))
 
-    return render_template('blog/create.html')
+    return render_template('home/create.html')
 
 
 
@@ -185,9 +185,9 @@ def update(id):
                 (title, body, id)
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('home.index'))
 
-    return render_template('blog/update.html', post=post)
+    return render_template('home/update.html', post=post)
 
 
 
@@ -199,4 +199,4 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
-    return redirect(url_for('blog.index'))
+    return redirect(url_for('home.index'))

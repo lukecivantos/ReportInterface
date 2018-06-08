@@ -3,7 +3,7 @@
 {% block header %}
     <h1>{% block title %}Get Reports{% endblock %}</h1>
     {% if g.user %}
-        <a class="action" href="{{ url_for('blog.index') }}">History</a>
+        <a class="action" href="{{ url_for('home.index') }}">History</a>
     {% endif %}
 {% endblock %}
 
@@ -24,7 +24,6 @@
     </form>
     {% if posts[-1] != "" %}
         <h4>Upload Successful!</h4>
-        <a class="action" href="{{ url_for('blog.index') }}"><a href="/static/uploads/{{posts[-2]}}" download="{{posts[-2]}}">Download</a></a>
+        <a class="action" href="{{ url_for('home.index') }}"><a href="/static/uploads/{{posts[-2]}}" download="{{posts[-2]}}">Download</a></a>
     {% endif %}
 {% endblock %}
-  
