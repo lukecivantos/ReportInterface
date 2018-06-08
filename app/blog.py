@@ -29,9 +29,19 @@ def index():
         os.remove(f)
     return render_template('blog/index.html', posts=posts)
 
-@bp.route('/deleted')
+"""
+The following code deletes a user from the database
+"""
+
+@bp.route('/<int:id>/deleted')
 @login_required
-def deleted():
+def deleted(id):
+
+    db = get_db()
+
+    db.execute('DELETE FROM user WHERE id = ?', (id,))
+    db.commit()
+    
     return redirect(url_for('blog.admin'))
 
 """

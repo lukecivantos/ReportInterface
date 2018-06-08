@@ -24,7 +24,7 @@
         {% endif %}
       </header>
       <br>
-      <a class="action" href="{{ url_for('blog.deleted') }}">Delete User</a>
+      <a class="action" href="{{ url_for('blog.deleted', id=user['id']) }}">Delete User</a>
     </article>
     {% if not loop.last %}
       <hr>
