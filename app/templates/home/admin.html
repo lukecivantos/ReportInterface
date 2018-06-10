@@ -19,14 +19,18 @@
             <div class="about">is not an Admin</div>
           {% endif %}
         </div>
-        {% if user['admin'] == 0 %}
-            <a class="action" href="{{ url_for('home.makeadmin', id=user['id']) }}">Make Admin</a>
-        {% else %}
-            <a class="action" href="{{ url_for('home.removeadmin', id=user['id']) }}">Remove Admin</a>
+        {% if g.user['id'] != user['id'] %}
+            {% if user['admin'] == 0 %}
+                <a class="action" href="{{ url_for('home.makeadmin', id=user['id']) }}">Make Admin</a>
+            {% else %}
+                <a class="action" href="{{ url_for('home.removeadmin', id=user['id']) }}">Remove Admin</a>
+            {% endif %}
         {% endif %}
       </header>
       <br>
-      <a class="action" href="{{ url_for('home.deleted', id=user['id']) }}">Delete User</a>
+      {% if g.user['id'] != user['id'] %}
+          <a class="action" href="{{ url_for('home.deleted', id=user['id']) }}">Delete User</a>
+      {% endif %}
     </article>
     {% if not loop.last %}
       <hr>
