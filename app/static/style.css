@@ -149,16 +149,33 @@ input[type=submit] {
     margin-bottom: 20px;
 }
 
-.footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #A3D6F5;
-  text-align: center;
-}
-
 input {
     max-width: 200px;
+}
+
+label {
+    margin-left: 1px;
+}
+
+#username {
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+#password {
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+#verification {
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
 }
