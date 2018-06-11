@@ -91,7 +91,7 @@ def admin():
     users = db.execute(
         'SELECT * FROM user'
     ).fetchall()
-
+    users = sorted(users, key=lambda user: user['username'])
     return render_template('home/admin.html', users=users)
 
 
