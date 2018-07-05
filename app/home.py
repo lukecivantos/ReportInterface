@@ -1,7 +1,7 @@
 from flask import (
     session, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
-import ctypes
+from tkinter import messagebox
 
 from werkzeug.exceptions import abort
 
@@ -53,7 +53,7 @@ Makes a user an admin
 @bp.route('/<int:id>/makeadmin')
 @login_required
 def makeadmin(id):
-    ctypes.windll.user32.MessageBoxW(0, "Your text", "Your title", 1)
+    messagebox.showinfo("Title", "Are you sure you would like to make this user an admin?")
     db = get_db()
     db.execute(
         'UPDATE user SET admin = ?'
