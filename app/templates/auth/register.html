@@ -23,6 +23,8 @@
             {% if sent == True %}
                 <p>Verification Code sent to tickets@hastypudding.org</p>
             {% else %}
+                <label for="email">Email</label>
+                <input name="email" id="email">
                 <input type="submit" name="submit" value="Send Code">
             {% endif %}
         </form>

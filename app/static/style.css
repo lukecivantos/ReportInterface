@@ -179,3 +179,11 @@ label {
     border-radius: 3px;
     box-sizing: border-box;
 }
+
+#email {
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}

@@ -16,7 +16,13 @@ def register():
     error = None
     if request.method == 'POST':
         if request.form["submit"] == "Send Code":
-            return render_template('auth/register.html', verified=False,sent=True)
+            email = request.form['email']
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                error = "Must be a valid email address."
+            if error is None:
+                return render_template('auth/register.html', verified=False,sent=True)
+            flash(error)
+            return render_template('auth/register.html', verified=False,sent=False)
         elif request.form["submit"] == "Verify":
             verification = request.form['verification']
             if verification != "TheGlue171":
