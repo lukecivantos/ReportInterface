@@ -1,9 +1,7 @@
 from flask import (
     session, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
-import win32api
-import win32com.client
-import pythoncom
+import ctypes
 
 from werkzeug.exceptions import abort
 
@@ -55,7 +53,7 @@ Makes a user an admin
 @bp.route('/<int:id>/makeadmin')
 @login_required
 def makeadmin(id):
-    result = win32api.MessageBox(None,"Are you sure you want to make this user an admin?", "title",1)
+    ctypes.windll.user32.MessageBoxW(0, "Your text", "Your title", 1)
     db = get_db()
     db.execute(
         'UPDATE user SET admin = ?'
