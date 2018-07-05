@@ -38,6 +38,15 @@ The following code deletes a user from the database
 @login_required
 def deleted(id):
     db = get_db()
+    user = db.execute(
+
+        'SELECT username FROM user'
+        ' WHERE id = ?',
+        (str(id))
+    ).fetchone()
+    username = user['username']
+    prompt = "Are you sure you want to delete " + username + "'s account? Click here to confirm."
+    flash(prompt)
 
     db.execute('DELETE FROM user WHERE id = ?', (id,))
     db.commit()
@@ -52,7 +61,17 @@ Makes a user an admin
 @bp.route('/<int:id>/makeadmin')
 @login_required
 def makeadmin(id):
+    print(type(id))
     db = get_db()
+    user = db.execute(
+
+        'SELECT username FROM user'
+        ' WHERE id = ?',
+        (str(id))
+    ).fetchone()
+    username = user['username']
+    prompt = "Are you sure you want to make " + username + " an admin? Click here to confirm."
+    flash(prompt)
     db.execute(
         'UPDATE user SET admin = ?'
         ' WHERE id = ?',
@@ -70,6 +89,17 @@ Removes a user as admin
 @login_required
 def removeadmin(id):
     db = get_db()
+    user = db.execute(
+
+        'SELECT username FROM user'
+        ' WHERE id = ?',
+        (str(id))
+    ).fetchone()
+    username = user['username']
+    prompt = "Are you sure you want to remove " + username + " as an admin? Click here to confirm."
+    flash(prompt)
+
+
     db.execute(
         'UPDATE user SET admin = ?'
         ' WHERE id = ?',
