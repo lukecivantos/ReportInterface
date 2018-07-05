@@ -1,6 +1,10 @@
 from flask import (
     session, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
+import win32api
+import win32com.client
+import pythoncom
+
 from werkzeug.exceptions import abort
 
 #importing for secure file upload and conversion
@@ -36,7 +40,6 @@ The following code deletes a user from the database
 @bp.route('/<int:id>/deleted')
 @login_required
 def deleted(id):
-
     db = get_db()
 
     db.execute('DELETE FROM user WHERE id = ?', (id,))
@@ -52,6 +55,7 @@ Makes a user an admin
 @bp.route('/<int:id>/makeadmin')
 @login_required
 def makeadmin(id):
+    result = win32api.MessageBox(None,"Are you sure you want to make this user an admin?", "title",1)
     db = get_db()
     db.execute(
         'UPDATE user SET admin = ?'
