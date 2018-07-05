@@ -1,7 +1,6 @@
 from flask import (
     session, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
-from tkinter import messagebox
 
 from werkzeug.exceptions import abort
 
@@ -53,7 +52,6 @@ Makes a user an admin
 @bp.route('/<int:id>/makeadmin')
 @login_required
 def makeadmin(id):
-    messagebox.showinfo("Title", "Are you sure you would like to make this user an admin?")
     db = get_db()
     db.execute(
         'UPDATE user SET admin = ?'
