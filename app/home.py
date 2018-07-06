@@ -1,5 +1,5 @@
 from flask import (
-    session, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
+    session, Markup, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
 
 from werkzeug.exceptions import abort
@@ -39,19 +39,33 @@ The following code deletes a user from the database
 def deleted(id):
     db = get_db()
     user = db.execute(
-
         'SELECT username FROM user'
         ' WHERE id = ?',
-        (str(id))
+        (str(id),)
     ).fetchone()
     username = user['username']
-    prompt = "Are you sure you want to delete " + username + "'s account? Click here to confirm."
+    prompt = Markup("Are you sure you want to delete the account: <b><em>" + username + "</em></b>? Click <b><a href=" + url_for('home.deleteconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
     flash(prompt)
 
+    return redirect(url_for('home.admin'))
+
+@bp.route('/<int:id>/deleteconfirmed')
+@login_required
+def deleteconfirmed(id):
+    db = get_db()
+    user = db.execute(
+        'SELECT username FROM user'
+        ' WHERE id = ?',
+        (str(id),)
+    ).fetchone()
+    username = user['username']
+    confirmation = username + " successfully deleted."
+    flash(confirmation)
     db.execute('DELETE FROM user WHERE id = ?', (id,))
     db.commit()
 
     return redirect(url_for('home.admin'))
+
 
 
 """
@@ -61,17 +75,29 @@ Makes a user an admin
 @bp.route('/<int:id>/makeadmin')
 @login_required
 def makeadmin(id):
-    print(type(id))
     db = get_db()
     user = db.execute(
-
         'SELECT username FROM user'
         ' WHERE id = ?',
         (str(id))
     ).fetchone()
     username = user['username']
-    prompt = "Are you sure you want to make " + username + " an admin? Click here to confirm."
+    prompt = Markup("Are you sure you want to make <b><em>" + username + "</b></em> an admin? Click <b><a href=" + url_for('home.makeconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
     flash(prompt)
+    return redirect(url_for('home.admin'))
+
+@bp.route('/<int:id>/makeconfirmed')
+@login_required
+def makeconfirmed(id):
+    db = get_db()
+    user = db.execute(
+        'SELECT username FROM user'
+        ' WHERE id = ?',
+        (str(id),)
+    ).fetchone()
+    username = user['username']
+    confirmation = username + " successfully made an admin."
+    flash(confirmation)
     db.execute(
         'UPDATE user SET admin = ?'
         ' WHERE id = ?',
@@ -79,7 +105,6 @@ def makeadmin(id):
     )
     db.commit()
     return redirect(url_for('home.admin'))
-
 
 """
 Removes a user as admin
@@ -96,10 +121,22 @@ def removeadmin(id):
         (str(id))
     ).fetchone()
     username = user['username']
-    prompt = "Are you sure you want to remove " + username + " as an admin? Click here to confirm."
+    prompt = Markup("Are you sure you want to remove <b><em>" + username + "</b></em> as an admin? Click <b><a href=" + url_for('home.removeconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
     flash(prompt)
+    return redirect(url_for('home.admin'))
 
-
+@bp.route('/<int:id>/removeconfirmed')
+@login_required
+def removeconfirmed(id):
+    db = get_db()
+    user = db.execute(
+        'SELECT username FROM user'
+        ' WHERE id = ?',
+        (str(id),)
+    ).fetchone()
+    username = user['username']
+    confirmation = username + " successfully removed as admin."
+    flash(confirmation)
     db.execute(
         'UPDATE user SET admin = ?'
         ' WHERE id = ?',
@@ -107,6 +144,7 @@ def removeadmin(id):
     )
     db.commit()
     return redirect(url_for('home.admin'))
+
 
 
 """
