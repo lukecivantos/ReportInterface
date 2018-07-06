@@ -138,6 +138,7 @@ input[type=submit] {
   min-width: 10em;
 }
 
+
 .newInput {
     width: 160px;
     margin-bottom: 10px;
@@ -157,6 +158,12 @@ label {
     margin-left: 1px;
 }
 
+#settings {
+    height: 23px;
+    width: auto;
+    margin-top: 5px;
+}
+
 #username {
     padding: 5px;
     display: inline-block;
@@ -170,7 +177,29 @@ label {
     border: 1px solid #ccc;
     border-radius: 3px;
     box-sizing: border-box;
+    margin-bottom: .5px;
 }
+#newpassword {
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+#confirmpassword {
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+#forgotpassword{
+    width: 200px;
+    font-size: 10px;
+    text-align: right;
+    margin-bottom: 5px;
+}
+
 
 #verification {
     padding: 5px;

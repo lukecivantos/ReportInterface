@@ -59,7 +59,7 @@ def deleteconfirmed(id):
         (str(id),)
     ).fetchone()
     username = user['username']
-    confirmation = username + " successfully deleted."
+    confirmation = Markup("<b><em>" + username + "</em></b> successfully deleted.")
     flash(confirmation)
     db.execute('DELETE FROM user WHERE id = ?', (id,))
     db.commit()
@@ -79,7 +79,7 @@ def makeadmin(id):
     user = db.execute(
         'SELECT username FROM user'
         ' WHERE id = ?',
-        (str(id))
+        (str(id),)
     ).fetchone()
     username = user['username']
     prompt = Markup("Are you sure you want to make <b><em>" + username + "</b></em> an admin? Click <b><a href=" + url_for('home.makeconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
@@ -96,7 +96,7 @@ def makeconfirmed(id):
         (str(id),)
     ).fetchone()
     username = user['username']
-    confirmation = username + " successfully made an admin."
+    confirmation = Markup("<b><em>" + username + "</em></b> successfully made an admin.")
     flash(confirmation)
     db.execute(
         'UPDATE user SET admin = ?'
@@ -118,7 +118,7 @@ def removeadmin(id):
 
         'SELECT username FROM user'
         ' WHERE id = ?',
-        (str(id))
+        (str(id),)
     ).fetchone()
     username = user['username']
     prompt = Markup("Are you sure you want to remove <b><em>" + username + "</b></em> as an admin? Click <b><a href=" + url_for('home.removeconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
@@ -135,7 +135,7 @@ def removeconfirmed(id):
         (str(id),)
     ).fetchone()
     username = user['username']
-    confirmation = username + " successfully removed as admin."
+    confirmation = Markup("<b><em>" + username + "</em></b> successfully removed as admin.")
     flash(confirmation)
     db.execute(
         'UPDATE user SET admin = ?'
