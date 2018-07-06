@@ -159,9 +159,14 @@ label {
 }
 
 #settings {
-    height: 23px;
+    height: 20px;
     width: auto;
-    margin-top: 5px;
+}
+#setting {
+    height: 20px;
+    width: auto;
+    padding: 0px;
+    margin-top: 6px;
 }
 
 #username {
