@@ -2,7 +2,6 @@
 app/templates/home.py
 
 This file handles the main feed.
-This includes the report history, the
 
 """
 

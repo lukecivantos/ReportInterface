@@ -2,7 +2,6 @@
 app/templates/admin.py
 
 This file handles the admin page.
-This includes the report history, the
 
 """
 

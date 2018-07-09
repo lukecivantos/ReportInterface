@@ -51,10 +51,7 @@ def createFile(card, fileDate, file):
                     else:
                         a.write("FR SUP\t")
                 elif int(float(line[9])) >= 125 and int(float(line[9])) < 250:
-                    if int(float(line[9])) == 125:
-                        a.write("FR PAT or BOWS\t")
-                    else:
-                        a.write("FR PAT\t")
+                    a.write("FR PAT\t")
             elif line[8] == "HPT 170 Alumni Memberships":
                 if int(float(line[9])) == 280:
                     a.write("FR Kickline\t")
