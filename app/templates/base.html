@@ -18,7 +18,7 @@
                 <li><a href="{{ url_for('admin.admin') }}">Admin</a>
             {% endif %}
             <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-            <li><a id="setting" href="changepassword"><img id="settings" src="/static/img/settings.png" alt="Settings"></a></li>
+            <li><a id="setting" href="{{ url_for('settings.settings') }}"><img id="settings" src="/static/img/settings.png" alt="Settings"></a></li>
         {% else %}
             <li><a href="{{ url_for('auth.register') }}">Register</a>
             <li><a href="{{ url_for('auth.login') }}">Log In</a>

@@ -1,5 +1,5 @@
 """
-app/templates/admin.py
+app/admin.py
 
 This file handles the admin page.
 
@@ -13,7 +13,7 @@ from flask import (
 from app.auth import login_required
 from app.db import get_db
 
-bp = Blueprint('admin', __name__, url_prefix='/admin')
+bp = Blueprint('admin', __name__)
 
 #Renders admin page with option to delete users + control admin status
 @bp.route('/admin')

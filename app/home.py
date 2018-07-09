@@ -1,5 +1,5 @@
 """
-app/templates/home.py
+app/home.py
 
 This file handles the main feed.
 
