@@ -10,7 +10,6 @@ from app.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-
 @bp.route('/register', methods=('GET','POST'))
 def register():
     error = None
@@ -41,6 +40,8 @@ def register():
                 error = "Username must be a valid email address."
             elif not password:
                 error = "Password is required."
+            elif validate_password(password) != None:
+                error = validate_password(password)
             elif db.execute(
                 'SELECT id FROM user WHERE username = ?', (username,)
             ).fetchone() is not None:
@@ -174,3 +175,14 @@ def login_required(view):
             return redirect(url_for('auth.login'))
         return view(**kwargs)
     return wrapped_view
+
+def validate_password(password):
+    while True:
+        if len(password) < 8:
+            return "Make sure your password is at least 8 letters."
+        elif re.search('[0-9]',password) is None:
+            return "Make sure your password has a number in it."
+        elif re.search('[A-Z]',password) is None:
+            return "Make sure your password has a capital letter in it."
+        else:
+            return None

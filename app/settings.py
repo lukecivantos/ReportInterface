@@ -17,7 +17,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.formatFile import createFile
 from werkzeug.utils import secure_filename
 
-from app.auth import login_required
+from app.auth import login_required,validate_password
 from app.db import get_db
 
 bp = Blueprint('settings', __name__)
@@ -29,17 +29,6 @@ def settings():
     admin =  g.user['admin']
 
     return render_template('home/settings.html', admin=admin)
-
-def validatePassword(password):
-    while True:
-        if len(password) < 8:
-            return "Make sure your password is at least 8 letters."
-        elif re.search('[0-9]',password) is None:
-            return "Make sure your password has a number in it."
-        elif re.search('[A-Z]',password) is None:
-            return "Make sure your password has a capital letter in it."
-        else:
-            return None
 
 @bp.route('/changepassword', methods=('GET', 'POST'))
 @login_required
@@ -56,7 +45,7 @@ def changepassword():
         elif newpassword != confirmpassword:
             error = "Password and confirmation do not match."
         else:
-            prompt = validatePassword(newpassword)
+            prompt = validate_password(newpassword)
             if prompt != None:
                 error = prompt
         if error is None:
