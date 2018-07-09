@@ -26,7 +26,9 @@ def register():
         elif request.form["submit"] == "Verify":
             verification = request.form['verification']
             if verification != "TheGlue171":
-                flash("Incorrect Verification Code. Check Tickets Email for Verification Code.")
+                prompt =    "Incorrect Verification Code. " \
+                            "Check Tickets Email for Verification Code."
+                flash(prompt)
             else:
                 return render_template('auth/register.html', verified=True,sent=False)
         else:

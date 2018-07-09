@@ -1,3 +1,12 @@
+"""
+app/templates/home.py
+
+This file handles the main feed.
+This includes the report history, the
+
+"""
+
+
 from flask import (
     session, Markup, Flask, Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -25,147 +34,10 @@ def index():
         ' ORDER BY created DESC'
     ).fetchall()
 
-    pastFiles = [f for f in glob.glob("app/static/uploads/*.xls") if f.endswith(".xls")]
-    for f in pastFiles:
+    recentDownloads = [f for f in glob.glob("app/static/uploads/*.xls") if f.endswith(".xls")]
+    for f in recentDownloads:
         os.remove(f)
     return render_template('home/index.html', posts=posts)
-
-"""
-The following code deletes a user from the database
-"""
-
-@bp.route('/<int:id>/deleted')
-@login_required
-def deleted(id):
-    db = get_db()
-    user = db.execute(
-        'SELECT username FROM user'
-        ' WHERE id = ?',
-        (str(id),)
-    ).fetchone()
-    username = user['username']
-    prompt = Markup("Are you sure you want to delete the account: <b><em>" + username + "</em></b>? Click <b><a href=" + url_for('home.deleteconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
-    flash(prompt)
-
-    return redirect(url_for('home.admin'))
-
-@bp.route('/<int:id>/deleteconfirmed')
-@login_required
-def deleteconfirmed(id):
-    db = get_db()
-    user = db.execute(
-        'SELECT username FROM user'
-        ' WHERE id = ?',
-        (str(id),)
-    ).fetchone()
-    username = user['username']
-    confirmation = Markup("<b><em>" + username + "</em></b> successfully deleted.")
-    flash(confirmation)
-    db.execute('DELETE FROM user WHERE id = ?', (id,))
-    db.commit()
-
-    return redirect(url_for('home.admin'))
-
-
-
-"""
-Makes a user an admin
-"""
-
-@bp.route('/<int:id>/makeadmin')
-@login_required
-def makeadmin(id):
-    db = get_db()
-    user = db.execute(
-        'SELECT username FROM user'
-        ' WHERE id = ?',
-        (str(id),)
-    ).fetchone()
-    username = user['username']
-    prompt = Markup("Are you sure you want to make <b><em>" + username + "</b></em> an admin? Click <b><a href=" + url_for('home.makeconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
-    flash(prompt)
-    return redirect(url_for('home.admin'))
-
-@bp.route('/<int:id>/makeconfirmed')
-@login_required
-def makeconfirmed(id):
-    db = get_db()
-    user = db.execute(
-        'SELECT username FROM user'
-        ' WHERE id = ?',
-        (str(id),)
-    ).fetchone()
-    username = user['username']
-    confirmation = Markup("<b><em>" + username + "</em></b> successfully made an admin.")
-    flash(confirmation)
-    db.execute(
-        'UPDATE user SET admin = ?'
-        ' WHERE id = ?',
-        (1, id)
-    )
-    db.commit()
-    return redirect(url_for('home.admin'))
-
-"""
-Removes a user as admin
-"""
-
-@bp.route('/<int:id>/removeadmin')
-@login_required
-def removeadmin(id):
-    db = get_db()
-    user = db.execute(
-
-        'SELECT username FROM user'
-        ' WHERE id = ?',
-        (str(id),)
-    ).fetchone()
-    username = user['username']
-    prompt = Markup("Are you sure you want to remove <b><em>" + username + "</b></em> as an admin? Click <b><a href=" + url_for('home.removeconfirmed', id=id) + " class='alert-link'>here</a></b> to confirm.")
-    flash(prompt)
-    return redirect(url_for('home.admin'))
-
-@bp.route('/<int:id>/removeconfirmed')
-@login_required
-def removeconfirmed(id):
-    db = get_db()
-    user = db.execute(
-        'SELECT username FROM user'
-        ' WHERE id = ?',
-        (str(id),)
-    ).fetchone()
-    username = user['username']
-    confirmation = Markup("<b><em>" + username + "</em></b> successfully removed as admin.")
-    flash(confirmation)
-    db.execute(
-        'UPDATE user SET admin = ?'
-        ' WHERE id = ?',
-        (0, id)
-    )
-    db.commit()
-    return redirect(url_for('home.admin'))
-
-
-
-"""
-Following code basically gives the ability to delete users to the Admin
-"""
-@bp.route('/admin')
-@login_required
-def admin():
-    db = get_db()
-    if g.user['admin'] == 0:
-        return redirect(url_for('home.index'))
-    users = db.execute(
-        'SELECT * FROM user'
-    ).fetchall()
-    users = sorted(users, key=lambda user: user['username'])
-    return render_template('home/admin.html', users=users)
-
-
-
-
-
 
 """
 Following code handles file uploads
@@ -221,9 +93,6 @@ def reports():
         db.commit()
     return render_template('home/reports.html', posts=posts)
 
-
-
-
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
@@ -248,8 +117,6 @@ def create():
             return redirect(url_for('home.index'))
 
     return render_template('home/create.html')
-
-
 
 def get_post(id, check_author=True):
     post = get_db().execute(
