@@ -14,10 +14,6 @@
     <ul>
         {% if g.user %}
             <li><span>{{ g.user['username'].split('@')[0] }}</span>
-            {% if g.user['admin'] != 0 %}
-                <li><a href="{{ url_for('admin.admin') }}">Admin</a>
-            {% endif %}
-            <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
             <li><a id="setting" href="{{ url_for('settings.settings') }}"><img id="settings" src="/static/img/settings.png" alt="Settings"></a></li>
         {% else %}
             <li><a href="{{ url_for('auth.register') }}">Register</a>

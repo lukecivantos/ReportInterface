@@ -6,10 +6,24 @@
 {% endblock %}
 
 {% block content %}
-    <h4>Change Password</h4>
-    <h4>Admin</h4>
-    <h4>Contact Admins</h4>
-
+    <ul>
+        <li>
+            <h4><a href="{{ url_for('settings.changepassword') }}">Change Password</a></h4>
+        </li>
+        <li>
+            {% if admin == 1 %}
+                <h4><a href="{{ url_for('admin.admin') }}"> Admin Page</a></h4>
+            {% else %}
+                <h4>Request Admin Access</h4>
+            {% endif %}
+        </li>
+        <li>
+            <h4>Contact Admins</h4>
+        </li>
+        <li>
+            <h4><a href="{{ url_for('auth.logout') }}">Log Out</a></h4>
+        </li>
+    </ul>
 
 
 {% endblock %}

@@ -160,35 +160,6 @@ def update(id):
 
     return render_template('home/update.html', post=post)
 
-@bp.route('/changepassword', methods=('GET', 'POST'))
-@login_required
-def changepassword():
-    error = None
-    if request.method == 'POST':
-        newpassword = request.form['newpassword']
-        confirmpassword = request.form['confirmpassword']
-        db = get_db()
-        if not newpassword:
-            error = "Password is required."
-        elif not confirmpassword:
-            error = "Please re-enter password to confirm."
-        elif newpassword != confirmpassword:
-            error = "Password and confirmation do not match."
-
-        if error is None:
-            db.execute(
-                'UPDATE user SET password = ?'
-                ' WHERE id = ?',
-                (generate_password_hash(newpassword),g.user['id'])
-            )
-            db.commit()
-            flash("Password successfully reset.")
-            return redirect(url_for('home.index'))
-        flash(error)
-        return render_template('home/changepassword.html')
-
-    return render_template('home/changepassword.html')
-
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
