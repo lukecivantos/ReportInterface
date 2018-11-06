@@ -35,27 +35,27 @@ def createFile(card, fileDate, file):
                 else:
                     a.write("probably dinner with donation?\t")
             elif line[8] == "HPT 171: Man of the Year":
-                a.write("MOY\t")
+                a.write("MOY\t") #250
             elif line[8] == "HPT 171: Woman of the Year":
-                a.write("WOY\t")
+                a.write("WOY\t") #100
             elif line[8] == "HPT 171 Donors":
                 if int(float(line[9])) >= 2500 and int(float(line[9])) < 5000:
                     a.write("FR BFS\t")
                 elif int(float(line[9])) >= 1000 and int(float(line[9])) < 2500:
                     a.write("PATRON\t")
-                elif int(float(line[9])) >= 500 and int(float(line[9])) < 1000:
+                elif int(float(line[9])) >= 600 and int(float(line[9])) < 1000:
                     a.write("FR BEN\t")
-                elif int(float(line[9])) >= 250 and int(float(line[9])) < 500:
-                    if int(float(line[9])) == 280:
-                        a.write("Probably FR Kickline\t")
-                    else:
-                        a.write("FR SUP\t")
-                elif int(float(line[9])) >= 125 and int(float(line[9])) < 250:
-                    a.write("FR PAT\t")
+                elif int(float(line[9])) >= 400 and int(float(line[9])) < 600:
+                    a.write("FR SUP\t")
+                elif int(float(line[9])) >= 200 and int(float(line[9])) < 400:
+                    if int(float(line[9])) == 300:
+                        a.write("Probably Kickline, but check Vendini\t")
+                    else: 
+                        a.write("FR Friend\t")
             elif line[8] == "HPT 171 Alumni Memberships":
-                if int(float(line[9])) == 280:
+                if int(float(line[9])) == 300:
                     a.write("FR Kickline\t")
-                elif int(float(line[9])) >= 125:
+                elif int(float(line[9])) >= 200:
                     a.write("FR PAT\t")
                 else:
                     a.write("group/donation\t")
