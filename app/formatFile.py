@@ -22,23 +22,23 @@ def createFile(card, fileDate, file):
         if len(line) > 1:
             if words.index(line) == 0:
                 a.write("Account\t")
-            elif line[8] == "HPT 170: Intermission Impossible":
+            elif line[8] == "HPT 171: France France Revolution":
                 if int(float(line[9])) % 32 == 0:
                     a.write("BOS WD\t")
                 elif int(float(line[9])) % 42 == 0:
                     a.write("BOS WE\t")
                 else:
                     a.write("group/donation\t")
-            elif line[8] == "Alumni Dinner 2018":
+            elif line[8] == "Alumni Dinner 2019":
                 if int(float(line[9])) == 35:
                     a.write("ALUMNI DIN\t")
                 else:
                     a.write("probably dinner with donation?\t")
-            elif line[8] == "HPT 170: Man of the Year":
+            elif line[8] == "HPT 171: Man of the Year":
                 a.write("MOY\t")
-            elif line[8] == "HPT 170: Woman of the Year":
+            elif line[8] == "HPT 171: Woman of the Year":
                 a.write("WOY\t")
-            elif line[8] == "HPT 170 Donors":
+            elif line[8] == "HPT 171 Donors":
                 if int(float(line[9])) >= 2500 and int(float(line[9])) < 5000:
                     a.write("FR BFS\t")
                 elif int(float(line[9])) >= 1000 and int(float(line[9])) < 2500:
