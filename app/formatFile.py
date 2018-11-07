@@ -49,18 +49,15 @@ def createFile(card, fileDate, file):
                     a.write("FR SUP\t")
                 elif int(float(line[9])) >= 200 and int(float(line[9])) < 400:
                     if int(float(line[9])) == 300:
-                        a.write("Probably Kickline, but check Vendini\t")
+                        a.write("LIKELY KICKLINE - COULD BE FRIEND - CHECK VENDINI\t")
                     else: 
-                        a.write("FR Friend\t")
-            elif line[8] == "Membership":
-                if int(float(line[9])) == 300:
-                    a.write("FR Kickline\t")
-                elif int(float(line[9])) == 60: 
-                    a.write("FR Torch\t")
+                        a.write("FR FRIEND\t")
                 elif int(float(line[9])) >= 200:
                     a.write("FR PAT\t")
+                elif int(float(line[9])) == 60: 
+                    a.write("FR TORCH\t")
                 else:
-                    a.write("group/donation\t")
+                    a.write("UNKOWN: CHECK VENDINI\t")
             else:
                 a.write("This is a catch all. I don't know what they purchased and they likely were a group sale (with discount) or purchased a ticket and donated on top of it. \t")
             a.write(line[4] + "\t")
