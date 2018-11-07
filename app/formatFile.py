@@ -22,21 +22,21 @@ def createFile(card, fileDate, file):
         if len(line) > 1:
             if words.index(line) == 0:
                 a.write("Account\t")
-            elif line[8] == "HPT 171: France France Revolution":
+            elif line[8] == "HPT 171":
                 if int(float(line[9])) % 32 == 0:
                     a.write("BOS WD\t")
                 elif int(float(line[9])) % 42 == 0:
                     a.write("BOS WE\t")
                 else:
-                    a.write("group/donation\t")
+                    a.write("This is a Cambridge ticket, either the customer purchased a program or donated on top of the purchase.\t")
             elif line[8] == "Alumni Dinner 2019":
                 if int(float(line[9])) == 35:
                     a.write("ALUMNI DIN\t")
                 else:
-                    a.write("probably dinner with donation?\t")
-            elif line[8] == "HPT 171: Man of the Year":
+                    a.write("Alumni probably purchased dinner and added a donation?\t")
+            elif line[8] == "HPT 171 Man of the Year":
                 a.write("MOY\t") #250
-            elif line[8] == "HPT 171: Woman of the Year":
+            elif line[8] == "HPT 171 Woman of the Year":
                 a.write("WOY\t") #100
             elif line[8] == "HPT 171 Donors":
                 if int(float(line[9])) >= 2500 and int(float(line[9])) < 5000:
@@ -52,7 +52,7 @@ def createFile(card, fileDate, file):
                         a.write("Probably Kickline, but check Vendini\t")
                     else: 
                         a.write("FR Friend\t")
-            elif line[8] == "HPT 171 Alumni Memberships":
+            elif line[8] == "Membership":
                 if int(float(line[9])) == 300:
                     a.write("FR Kickline\t")
                 elif int(float(line[9])) >= 200:
@@ -60,7 +60,7 @@ def createFile(card, fileDate, file):
                 else:
                     a.write("group/donation\t")
             else:
-                a.write("group/donation\t")
+                a.write("This is a catch all. I don't know what they purchased and they likely were a group sale (with discount) or purchased a ticket and donated on top of it. \t")
             a.write(line[4] + "\t")
             a.write(line[9] + "\t")
             a.write(line[13] + "\t")
