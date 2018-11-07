@@ -38,7 +38,7 @@ def createFile(card, fileDate, file):
                 a.write("MOY\t") #250
             elif line[8] == "HPT 171 Woman of the Year":
                 a.write("WOY\t") #100
-            elif line[8] == "HPT 171 Donors":
+            elif line[8] == "Membership":
                 if int(float(line[9])) >= 2500 and int(float(line[9])) < 5000:
                     a.write("FR BFS\t")
                 elif int(float(line[9])) >= 1000 and int(float(line[9])) < 2500:
